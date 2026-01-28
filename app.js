@@ -1,4 +1,5 @@
 const API_BASE = "https://back-stopcredit-production.up.railway.app";
+const user = window.Telegram.WebApp.initDataUnsafe?.user;
 
 let userId = null;
 
@@ -100,3 +101,4 @@ document.getElementById('refresh').addEventListener('click', loadState);
 
 // Запуск
 window.addEventListener('DOMContentLoaded', init);
+
