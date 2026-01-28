@@ -1,4 +1,4 @@
-const API_BASE = "https://stopcredit-backend.up.railway.app";
+const API_BASE = "back-stopcredit-production.up.railway.app";
 
 const tg = window.Telegram.WebApp;
 tg.ready();
@@ -100,3 +100,4 @@ async function addObligation() {
 
 // START
 init();
+
