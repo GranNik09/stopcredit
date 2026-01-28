@@ -1,80 +1,23 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
+  font-family: sans-serif;
   margin: 0;
-  background: linear-gradient(180deg, #020617, #020617);
-  color: #e5e7eb;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  padding: 1rem;
+  background: #f5f5f5;
+  color: #333;
 }
 
-.app {
-  padding: 16px;
-}
-
-header {
+h1 {
   text-align: center;
-  margin-bottom: 16px;
 }
 
-header h1 {
-  margin: 0;
+#state {
+  margin-top: 1rem;
 }
 
-#status {
-  opacity: 0.7;
-  font-size: 14px;
-}
-
-.card {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 12px;
-  margin-top: 16px;
-}
-
-.enemy {
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
-
-.enemy h3 {
-  margin: 0 0 4px 0;
-}
-
-.progress {
-  height: 10px;
-  background: #1e293b;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.progress div {
-  height: 100%;
-  background: linear-gradient(90deg, #22c55e, #4ade80);
-}
-
-input, select, button {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
+.obligation {
+  background: #fff;
   border-radius: 8px;
-  border: none;
-  font-size: 14px;
-}
-
-input, select {
-  background: #020617;
-  color: #e5e7eb;
-  border: 1px solid #1e293b;
-}
-
-button {
-  background: #22c55e;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
