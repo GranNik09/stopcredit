@@ -4,44 +4,33 @@
   <meta charset="UTF-8" />
   <title>StopCredit</title>
 
-  <!-- Telegram SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <h1>🎮 StopCredit</h1>
-  <p id="user-info">Загрузка...</p>
+  <div class="app">
+    <header>
+      <h1>🎮 StopCredit</h1>
+      <p id="status">Подключение к игре…</p>
+    </header>
 
-  <section>
-    <h2>📋 Кредиты и долги</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Тип</th>
-          <th>Название</th>
-          <th>Остаток</th>
-          <th>Прогресс</th>
-        </tr>
-      </thead>
-      <tbody id="table-body"></tbody>
-    </table>
-  </section>
+    <section id="list"></section>
 
-  <section class="add">
-    <h2>➕ Добавить</h2>
+    <section class="card">
+      <h2>➕ Новый враг</h2>
 
-    <select id="type">
-      <option value="credit">Кредит</option>
-      <option value="debt">Долг</option>
-    </select>
+      <select id="type">
+        <option value="credit">Кредит</option>
+        <option value="debt">Долг</option>
+      </select>
 
-    <input id="name" placeholder="Название" />
-    <input id="amount" type="number" placeholder="Сумма" />
+      <input id="name" placeholder="Название врага" />
+      <input id="amount" type="number" placeholder="Сумма" />
 
-    <button onclick="addObligation()">Добавить</button>
-  </section>
+      <button onclick="addObligation()">Добавить</button>
+    </section>
+  </div>
 
   <script src="app.js"></script>
 </body>
