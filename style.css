@@ -1,53 +1,80 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #0f172a;
+  margin: 0;
+  background: linear-gradient(180deg, #020617, #020617);
   color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+.app {
   padding: 16px;
 }
 
-h1, h2 {
+header {
   text-align: center;
+  margin-bottom: 16px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
+header h1 {
+  margin: 0;
 }
 
-th, td {
-  border-bottom: 1px solid #334155;
-  padding: 8px;
-  text-align: center;
+#status {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.enemy {
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.enemy h3 {
+  margin: 0 0 4px 0;
 }
 
 .progress {
-  background: #334155;
-  border-radius: 8px;
+  height: 10px;
+  background: #1e293b;
+  border-radius: 6px;
   overflow: hidden;
-  height: 12px;
 }
 
-.progress > div {
-  background: #22c55e;
+.progress div {
   height: 100%;
-}
-
-.add {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
 }
 
 input, select, button {
-  padding: 8px;
-  border-radius: 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
   border: none;
+  font-size: 14px;
+}
+
+input, select {
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid #1e293b;
 }
 
 button {
   background: #22c55e;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
 }
