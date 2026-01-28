@@ -1,3 +1,6 @@
+console.log("APP VERSION 2.0 LOADED");
+console.log("Telegram object:", window.Telegram?.WebApp);
+console.log("Init data:", window.Telegram?.WebApp?.initDataUnsafe);
 const API_BASE = "back-stopcredit-production.up.railway.app";
 
 const tg = window.Telegram.WebApp;
@@ -100,4 +103,5 @@ async function addObligation() {
 
 // START
 init();
+
 
