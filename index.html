@@ -13,8 +13,20 @@
 
   <div id="user-info" style="display:none;">
     <p>Привет, <span id="username"></span>!</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="credits">Кредиты</button>
+      <button class="tab-btn" data-tab="debts">Долги</button>
+      <button class="tab-btn" data-tab="earnings">Заработки</button>
+    </div>
+
+    <div class="tab-content" id="credits"></div>
+    <div class="tab-content" id="debts" style="display:none;"></div>
+    <div class="tab-content" id="earnings" style="display:none;">
+      <p>Заработки появятся здесь. Используйте метод "50/50": 50% на погашение долгов, 50% на себя 💎</p>
+    </div>
+
     <button id="refresh">Обновить данные</button>
-    <div id="state"></div>
   </div>
 </div>
 <script src="app.js"></script>
