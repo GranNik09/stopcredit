@@ -1,5 +1,7 @@
 const API_BASE = "https://back-stopcredit-production.up.railway.app";
 
+let userId = null;
+
 async function init() {
   const tg = window.Telegram.WebApp;
   const user = tg.initDataUnsafe?.user;
@@ -16,43 +18,61 @@ async function init() {
   // Авторизация
   const res = await fetch(`${API_BASE}/auth`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ telegram_id: user.id })
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({telegram_id: user.id})
   });
 
   const userData = await res.json();
-  console.log("AUTH OK:", userData);
+  userId = userData.id;
 
-  loadState(userData.id);
+  loadState();
+  setupTabs();
 }
 
-async function loadState(userId) {
+async function loadState() {
   const res = await fetch(`${API_BASE}/state/${userId}`);
   const data = await res.json();
 
-  const container = document.getElementById('state');
+  renderObligations(data, 'credits', 'credit');
+  renderObligations(data, 'debts', 'debt');
+}
+
+function renderObligations(data, containerId, type) {
+  const container = document.getElementById(containerId);
   container.innerHTML = '';
 
-  if (!data || data.length === 0) {
-    container.innerHTML = "<p>Нет данных о долгах или кредитах</p>";
+  const filtered = data.filter(ob => ob.type === type);
+  if (!filtered.length) {
+    container.innerHTML = `<p>Нет данных о ${type === 'credit' ? 'кредитах' : 'долгах'}</p>`;
     return;
   }
 
-  data.forEach(ob => {
+  filtered.forEach(ob => {
     const div = document.createElement('div');
     div.className = 'obligation';
+    const progressPercent = Math.round(((ob.initial_amount - ob.current_amount)/ob.initial_amount)*100);
     div.innerHTML = `
-      <strong>${ob.name}</strong> (${ob.type})<br>
+      <strong>${ob.name}</strong><br>
       Остаток: ${ob.current_amount} / ${ob.initial_amount}
+      <div class="progress-bar"><div class="progress" style="width:${progressPercent}%"></div></div>
     `;
     container.appendChild(div);
   });
 }
 
-document.getElementById('refresh').addEventListener('click', () => {
-  const tg = window.Telegram.WebApp;
-  const user = tg.initDataUnsafe?.user;
-  if (user) loadState(user.id);
-});
+function setupTabs() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      document.getElementById(tab.dataset.tab).style.display = 'block';
+    });
+  });
+}
+
+document.getElementById('refresh').addEventListener('click', loadState);
 
 window.addEventListener('DOMContentLoaded', init);
