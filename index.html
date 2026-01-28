@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>StopCredit</title>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StopCredit Game</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="app">
+  <h1>StopCredit 💰</h1>
+  <div id="status">Загрузка...</div>
 
-  <div class="app">
-    <header>
-      <h1>🎮 StopCredit</h1>
-      <p id="status">Подключение к игре…</p>
-    </header>
-
-    <section id="list"></section>
-
-    <section class="card">
-      <h2>➕ Новый враг</h2>
-
-      <select id="type">
-        <option value="credit">Кредит</option>
-        <option value="debt">Долг</option>
-      </select>
-
-      <input id="name" placeholder="Название врага" />
-      <input id="amount" type="number" placeholder="Сумма" />
-
-      <button onclick="addObligation()">Добавить</button>
-    </section>
+  <div id="user-info" style="display:none;">
+    <p>Привет, <span id="username"></span>!</p>
+    <button id="refresh">Обновить данные</button>
+    <div id="state"></div>
   </div>
-
-  <script src="app.js"></script>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
