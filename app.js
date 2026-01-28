@@ -1,66 +1,76 @@
-const API_BASE = "back-stopcredit-production.up.railway.app";
+const API_BASE = "https://stopcredit-backend.up.railway.app";
 
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const telegramId = tg.initDataUnsafe?.user?.id;
-
-const userInfo = document.getElementById("user-info");
-const tableBody = document.getElementById("table-body");
+const statusEl = document.getElementById("status");
+const listEl = document.getElementById("list");
 
 let userId = null;
 
-// ==========================
-// Авторизация
-// ==========================
-async function auth() {
-  const res = await fetch(`${API_BASE}/auth`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ telegram_id: telegramId })
-  });
+// ---------- INIT ----------
+async function init() {
+  if (!tg.initDataUnsafe?.user?.id) {
+    statusEl.textContent = "❌ Открой приложение через Telegram";
+    return;
+  }
 
-  const user = await res.json();
-  userId = user.id;
+  statusEl.textContent = "🎮 Вход в игру…";
 
-  userInfo.textContent = `👤 Пользователь #${userId}`;
-  loadState();
+  try {
+    const res = await fetch(`${API_BASE}/auth`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        telegram_id: tg.initDataUnsafe.user.id
+      })
+    });
+
+    const user = await res.json();
+    userId = user.id;
+
+    statusEl.textContent = "🗺 Поле боя загружено";
+    loadState();
+  } catch (e) {
+    statusEl.textContent = "❌ Ошибка подключения";
+    console.error(e);
+  }
 }
 
-// ==========================
-// Загрузка данных
-// ==========================
+// ---------- LOAD ----------
 async function loadState() {
-  tableBody.innerHTML = "";
+  listEl.innerHTML = "";
 
   const res = await fetch(`${API_BASE}/state/${userId}`);
   const data = await res.json();
 
-  data.forEach(o => {
-    const percent =
-      Math.round((1 - o.current_amount / o.initial_amount) * 100);
+  if (!data.length) {
+    listEl.innerHTML = "<p>Пока врагов нет. Добавь первого.</p>";
+    return;
+  }
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${o.type}</td>
-      <td>${o.name}</td>
-      <td>${o.current_amount}</td>
-      <td>
-        <div class="progress">
-          <div style="width:${percent}%"></div>
-        </div>
-        ${percent}%
-      </td>
+  data.forEach(o => {
+    const percent = Math.round(
+      (1 - o.current_amount / o.initial_amount) * 100
+    );
+
+    const div = document.createElement("div");
+    div.className = "enemy";
+    div.innerHTML = `
+      <h3>${o.name}</h3>
+      <p>${o.type === "credit" ? "💳 Кредит" : "🤝 Долг"} · Осталось ${o.current_amount}</p>
+      <div class="progress">
+        <div style="width:${percent}%"></div>
+      </div>
+      <small>${percent}% пройдено</small>
     `;
 
-    tableBody.appendChild(row);
+    listEl.appendChild(div);
   });
 }
 
-// ==========================
-// Добавление долга / кредита
-// ==========================
+// ---------- ADD ----------
 async function addObligation() {
   const type = document.getElementById("type").value;
   const name = document.getElementById("name").value;
@@ -88,5 +98,5 @@ async function addObligation() {
   loadState();
 }
 
-// Запуск
-auth();
+// START
+init();
